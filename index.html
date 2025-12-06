@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>New Year fortune distribution event</title>
+<title>New Year Fortune Distribution Event</title>
+
 <style>
     body {
-        background: #fff7e6;
         margin: 0;
         font-family: 'Arial', sans-serif;
         overflow-x: hidden;
         text-align: center;
+
+        /* Background Tết */
+        background-image: url("https://i.imgur.com/7Te2sQx.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     /* --- TITLE --- */
@@ -36,47 +42,45 @@
 
     .mini-lion {
         width: 60px;
-        height: auto;
     }
 
-    /* --- LION DANCE --- */
+    /* Main lion */
     #lion {
-        width: 200px;
+        width: 260px;
         position: absolute;
-        left: -200px;
-        top: 300px;
-        animation: walk 6s linear infinite;
+        left: -260px;
+        top: 350px;
+        animation: walk 7s linear infinite;
     }
 
     @keyframes walk {
-        0%   { left: -200px; }
-        50%  { left: calc(100% - 200px); }
-        100% { left: -200px; }
+        0%   { left: -260px; }
+        50%  { left: calc(100% - 260px); }
+        100% { left: -260px; }
     }
 
-    /* Jump effect */
     .jump {
         animation: jumpUp 1s ease-out;
     }
 
     @keyframes jumpUp {
         0% { transform: translateY(0); }
-        50% { transform: translateY(-150px); }
+        50% { transform: translateY(-160px); }
         100% { transform: translateY(0); }
     }
 
-    /* --- RED ENVELOPES --- */
+    /* Red envelopes */
     .envelope {
-        width: 90px;
-        padding: 10px;
-        background: linear-gradient(#ff0000, #cc0000);
+        width: 95px;
+        background: linear-gradient(#ff0000, #bb0000);
         color: gold;
-        font-weight: bold;
         border-radius: 10px;
-        position: absolute;
-        display: none;
         border: 3px solid gold;
         text-align: center;
+        font-weight: bold;
+        padding: 12px;
+        position: absolute;
+        display: none;
         box-shadow: 0 0 10px gold;
         animation: drop 1.3s ease-out forwards;
     }
@@ -86,38 +90,41 @@
         100% { transform: translateY(0) rotate(0); opacity: 1; }
     }
 
-    /* --- MUSIC BUTTON --- */
     #musicBtn {
-        margin-top: 450px;
-        padding: 12px 25px;
+        margin-top: 500px;
+        padding: 14px 28px;
         background: red;
         border: none;
         color: gold;
         font-size: 20px;
         border-radius: 12px;
         cursor: pointer;
-        box-shadow: 0 0 10px gold;
+        box-shadow: 0 0 12px gold;
     }
 </style>
 </head>
 <body>
 
+<!-- TITLE -->
 <div class="title-wrap">
-    <img class="mini-lion" src="https://i.imgur.com/Jh5Ff0X.png">
-    <h1>New Year fortune distribution event</h1>
-    <img class="mini-lion" src="https://i.imgur.com/Jh5Ff0X.png">
+    <img class="mini-lion" src="https://i.imgur.com/Hl7whZv.png">
+    <h1>New Year Fortune Distribution Event</h1>
+    <img class="mini-lion" src="https://i.imgur.com/Hl7whZv.png">
 </div>
 
-<img id="lion" src="https://i.imgur.com/3uYJzDn.png">
+<!-- MAIN LION -->
+<img id="lion" src="https://i.imgur.com/zznQS3N.png">
 
-<button id="musicBtn">Play Music</button>
+<!-- MUSIC BUTTON -->
+<button id="musicBtn">Play Tết Music</button>
 
+<!-- MUSIC FILES -->
 <audio id="music" loop>
-    <source src="https://www.dropbox.com/scl/fi/xyz/tet_music.mp3?raw=1" type="audio/mp3">
+    <source src="https://dl.sndup.net/9x4p/TetHappy.mp3" type="audio/mp3">
 </audio>
 
 <audio id="sadMusic">
-    <source src="https://www.dropbox.com/scl/fi/xyz/sad_music.mp3?raw=1" type="audio/mp3">
+    <source src="https://dl.sndup.net/h8nt/SadSound.mp3" type="audio/mp3">
 </audio>
 
 <!-- RED ENVELOPES -->
@@ -125,41 +132,44 @@
 <div id="env2" class="envelope">600 Naira</div>
 <div id="env3" class="envelope">800 Naira</div>
 <div id="env4" class="envelope">2500 Naira</div>
-<div id="env5" class="envelope">Next time…</div>
+<div id="env5" class="envelope">Next Time…</div>
 <div id="env6" class="envelope">1000 Naira</div>
 
 <script>
     const lion = document.getElementById("lion");
-    const envelopes = [
-        env1, env2, env3, env4, env5, env6
-    ];
+    const envelopes = [env1, env2, env3, env4, env5, env6];
 
-    // MUSIC BUTTON
+    // BUTTON MUSIC
     document.getElementById("musicBtn").onclick = () => {
+        document.getElementById("sadMusic").pause();
         document.getElementById("music").play();
     };
 
-    // LION JUMP + THROW RED ENVELOPES
+    // LION JUMPS AND THROWS LUCKY MONEY
     setInterval(() => {
         lion.classList.add("jump");
 
         setTimeout(() => {
             lion.classList.remove("jump");
 
+            // Show envelopes
             envelopes.forEach((env, i) => {
-                env.style.left = (300 + i * 150) + "px";
-                env.style.top = "350px";
+                env.style.left = (250 + i * 150) + "px";
+                env.style.top = "450px";
                 env.style.display = "block";
             });
 
-            // sad music for "next time"
-            document.getElementById("sadMusic").pause();
+            // Music rules
             document.getElementById("music").pause();
+            document.getElementById("sadMusic").pause();
 
             if (env5.style.display === "block") {
                 document.getElementById("sadMusic").play();
+            } else {
+                document.getElementById("music").play();
             }
-        }, 500);
+
+        }, 450);
 
     }, 7000);
 </script>
