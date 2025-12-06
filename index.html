@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>New Year fortune distribution event</title>
+<style>
+    body {
+        background: #fff7e6;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+        text-align: center;
+    }
+
+    /* --- TITLE --- */
+    h1 {
+        color: red;
+        font-size: 42px;
+        margin-top: 20px;
+        text-shadow: 0 0 10px gold, 0 0 20px orange;
+        animation: bling 1.2s infinite;
+    }
+
+    @keyframes bling {
+        0% { text-shadow: 0 0 5px gold; }
+        50% { text-shadow: 0 0 20px yellow; }
+        100% { text-shadow: 0 0 5px gold; }
+    }
+
+    .title-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .mini-lion {
+        width: 60px;
+        height: auto;
+    }
+
+    /* --- LION DANCE --- */
+    #lion {
+        width: 200px;
+        position: absolute;
+        left: -200px;
+        top: 300px;
+        animation: walk 6s linear infinite;
+    }
+
+    @keyframes walk {
+        0%   { left: -200px; }
+        50%  { left: calc(100% - 200px); }
+        100% { left: -200px; }
+    }
+
+    /* Jump effect */
+    .jump {
+        animation: jumpUp 1s ease-out;
+    }
+
+    @keyframes jumpUp {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-150px); }
+        100% { transform: translateY(0); }
+    }
+
+    /* --- RED ENVELOPES --- */
+    .envelope {
+        width: 90px;
+        padding: 10px;
+        background: linear-gradient(#ff0000, #cc0000);
+        color: gold;
+        font-weight: bold;
+        border-radius: 10px;
+        position: absolute;
+        display: none;
+        border: 3px solid gold;
+        text-align: center;
+        box-shadow: 0 0 10px gold;
+        animation: drop 1.3s ease-out forwards;
+    }
+
+    @keyframes drop {
+        0% { transform: translateY(-200px) rotate(-20deg); opacity: 0; }
+        100% { transform: translateY(0) rotate(0); opacity: 1; }
+    }
+
+    /* --- MUSIC BUTTON --- */
+    #musicBtn {
+        margin-top: 450px;
+        padding: 12px 25px;
+        background: red;
+        border: none;
+        color: gold;
+        font-size: 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 0 10px gold;
+    }
+</style>
+</head>
+<body>
+
+<div class="title-wrap">
+    <img class="mini-lion" src="https://i.imgur.com/Jh5Ff0X.png">
+    <h1>New Year fortune distribution event</h1>
+    <img class="mini-lion" src="https://i.imgur.com/Jh5Ff0X.png">
+</div>
+
+<img id="lion" src="https://i.imgur.com/3uYJzDn.png">
+
+<button id="musicBtn">Play Music</button>
+
+<audio id="music" loop>
+    <source src="https://www.dropbox.com/scl/fi/xyz/tet_music.mp3?raw=1" type="audio/mp3">
+</audio>
+
+<audio id="sadMusic">
+    <source src="https://www.dropbox.com/scl/fi/xyz/sad_music.mp3?raw=1" type="audio/mp3">
+</audio>
+
+<!-- RED ENVELOPES -->
+<div id="env1" class="envelope">500 Naira</div>
+<div id="env2" class="envelope">600 Naira</div>
+<div id="env3" class="envelope">800 Naira</div>
+<div id="env4" class="envelope">2500 Naira</div>
+<div id="env5" class="envelope">Next time…</div>
+<div id="env6" class="envelope">1000 Naira</div>
+
+<script>
+    const lion = document.getElementById("lion");
+    const envelopes = [
+        env1, env2, env3, env4, env5, env6
+    ];
+
+    // MUSIC BUTTON
+    document.getElementById("musicBtn").onclick = () => {
+        document.getElementById("music").play();
+    };
+
+    // LION JUMP + THROW RED ENVELOPES
+    setInterval(() => {
+        lion.classList.add("jump");
+
+        setTimeout(() => {
+            lion.classList.remove("jump");
+
+            envelopes.forEach((env, i) => {
+                env.style.left = (300 + i * 150) + "px";
+                env.style.top = "350px";
+                env.style.display = "block";
+            });
+
+            // sad music for "next time"
+            document.getElementById("sadMusic").pause();
+            document.getElementById("music").pause();
+
+            if (env5.style.display === "block") {
+                document.getElementById("sadMusic").play();
+            }
+        }, 500);
+
+    }, 7000);
+</script>
+
+</body>
+</html>
